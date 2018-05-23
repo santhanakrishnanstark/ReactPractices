@@ -15,6 +15,11 @@
   display: inline-block;
 }
 
+button{
+  width: 100px; height: 40px;
+  background-color: blue; color: white;
+}
+
 @keyframes rotate{
   from{
     transform: rotate(20deg);

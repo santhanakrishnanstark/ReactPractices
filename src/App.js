@@ -17,6 +17,7 @@ class App extends Component {
     this.setState({showPerson:!doeshow});
   }
   changeHandler = (event,id) =>{
+    
     const personindex = this.state.person.findIndex(p=>{
       return p.id === id;
     });

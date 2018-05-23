@@ -6,8 +6,8 @@ class App extends Component {
 
    state = {
       person : [
-        {name:'sandy',msg:'am a programmer'},
-         {name:'stark',msg:'am an inventor'}
+        {id:'01', name:'sandy',msg:'am a programmer'},
+        {id:'02',name:'stark',msg:'am an inventor'}
       ],
       showPerson : false
     }
@@ -16,17 +16,24 @@ class App extends Component {
     const doeshow = this.state.showPerson;
     this.setState({showPerson:!doeshow});
   }
-  changeHandler = (event) =>{
-    this.setState({
-      person:[
-        {name:event.target.value, msg:'am a programmer'},
-        {name:'stark', msg:'am an inventor'}
-      ]
-    })
+  changeHandler = (event,id) =>{
+    const personindex = this.state.person.findIndex(p=>{
+      return p.id === id;
+    });
+    const person = {
+      ...this.state.person[personindex]
+    };
+
+    person.name = event.target.value;
+    const persons = [...this.state.person];
+    persons[personindex] = person;
+
+    this.setState({  person: persons })
   }
 
   deleteHandler = (personindex) => {
-    const persons=this.state.person;
+    //const persons=this.state.person;
+    const persons = [...this.state.person] // it will create a new array of elements 
     persons.splice(personindex,1);
     this.setState({ person : persons});
   }
@@ -40,18 +47,11 @@ class App extends Component {
         { this.state.person.map((person,index) =>{
           return <Person click={()=>this.deleteHandler(index)}
                            name={person.name} msg={person.msg} 
-                           changed={this.changeHandler}
+                           changed={(event)=> this.changeHandler(event,person.id)}
+                           key={person.id}
           />
         }) }
         </div>
-
-         
-           /* <div>
-            <Person name={this.state.person[0].name} msg={this.state.person[0].msg}
-                    changed={this.changeHandler}/>
-            <Person name={this.state.person[1].name} msg={this.state.person[1].msg}
-                    changed={this.changeHandler}>I am an Avenger Do you ?</Person>
-          </div>  */
       );
     }
 
